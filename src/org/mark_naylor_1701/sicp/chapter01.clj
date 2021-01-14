@@ -3,6 +3,53 @@
 ;; date:  2021-Jan-10
 (ns org.mark-naylor-1701.sicp.chapter01)
 
+;; Examples
+
+;; Trivial, but used in later examples and exercises.
+(defn square
+  "Return the result of a number muliplied by itself."
+  [x]
+  (* x x))
+
+(defn sum-of-squares
+  ""
+  [x y]
+  (+ (square x) (square y)))
+
+
+;; Although defined in Math/abs, use this version to follow the text.
+(defn abs
+  ""
+  [x]
+  (cond (< x 0) (- x)
+        :else x))
+
+;; Example 1.1.7: Square Roots by Newton's Method
+(def *delta* 0.001)
+
+(defn good-enough?
+  [guess x]
+  (< (abs (- (square guess) x)) *delta*))
+
+(defn average
+  [x y]
+  (/ (+ x y) 2.0))
+
+(defn improve
+  [guess x]
+  (average guess (/ x guess)))
+
+(defn sqrt-iter
+  [guess x]
+  (if (good-enough? guess x)
+    guess
+    (sqrt-iter (improve guess x)
+               x)))
+
+(defn sqrt
+  [x]
+  (sqrt-iter 1.0 x))
+
 ;; ------------------------------------------------------------------------------
 ;; BSD 3-Clause License
 
