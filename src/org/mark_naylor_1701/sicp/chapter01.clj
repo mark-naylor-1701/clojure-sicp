@@ -56,6 +56,15 @@
              (+ 5 4 (- 2 (- 3 (+ 6 4/5))))
              (* 3 (- 6 2) (- 2 7))))
 
+;; Exercise 1.3 Define a procedure that takes three numbers and
+;; returns the sum of the squares of the two larger numbers.
+(defn ex-1_3
+  ""
+  [x y z]
+  (cond (and (>= x z) (>= y z)) (sum-of-squares x y)
+        (and (>= x y) (>= z y)) (sum-of-squares x z)
+        :else (sum-of-squares y z)))
+
 ;; ------------------------------------------------------------------------------
 ;; BSD 3-Clause License
 
