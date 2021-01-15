@@ -25,7 +25,7 @@
         :else x))
 
 ;; Example 1.1.7: Square Roots by Newton's Method
-(def *delta* 0.001)
+(def ^:dynamic *delta* 0.001)
 
 (defn good-enough?
   [guess x]
@@ -50,7 +50,6 @@
   [x]
   (sqrt-iter 1.0 x))
 
-
 ;; Exercise 1.2 Convert to prefix form
 (def ex-1_2 (/
              (+ 5 4 (- 2 (- 3 (+ 6 4/5))))
@@ -64,6 +63,30 @@
   (cond (and (>= x z) (>= y z)) (sum-of-squares x y)
         (and (>= x y) (>= z y)) (sum-of-squares x z)
         :else (sum-of-squares y z)))
+
+
+;; Exercise 1.6. Alyssa P. Hacker doesn't see why if needs to be provided
+;; as a special form. "Why can't I just define it as an ordinary
+;; procedure in terms of cond?" she asks. Alyssa's friend Eva Lu Ator
+;; claims this can indeed be done, and she defines a new version of if:2
+
+(defn new-if
+  ""
+  [predicate then-clause else-clause]
+  (cond predicate then-clause
+        :else     else-clause))
+
+;; Eva demonstrates the program for Alyssa:
+(new-if (= 2 3) 0 5)
+
+(defn sqrt-iter-new-if
+  [guess x]
+  (new-if (good-enough? guess   x)
+          guess
+          (sqrt-iter-new-if (improve guess x)
+                            x)))
+
+;; Q: What happens if we run this?  A: Stack blows up because else clause always evaluated.
 
 ;; ------------------------------------------------------------------------------
 ;; BSD 3-Clause License
