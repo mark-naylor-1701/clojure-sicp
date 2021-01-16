@@ -4,9 +4,11 @@ A Clojure library designed to be a sandbox for doing the exercises in the MIT te
 
 ## Usage
 
-FIXME
+Set up as a lein library project. Not meant to be run, but to be fired up with a cider repl and used interactively.
 
 ## License
+
+BSD 3-Clause License
 
 <!-- ------------------------------------------------------------------------------ -->
 <!-- BSD 3-Clause License -->
