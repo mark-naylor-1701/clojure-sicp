@@ -46,8 +46,6 @@
     (sqrt-iter-1 (improve guess x)
                x)))
 
-(def sqrt-iter sqrt-iter-1)
-
 (defn sqrt-1
   [x]
   (sqrt-iter-1 1.0 x))
