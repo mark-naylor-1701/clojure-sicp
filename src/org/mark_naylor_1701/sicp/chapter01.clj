@@ -27,7 +27,7 @@
 ;; Example 1.1.7: Square Roots by Newton's Method
 (def ^:dynamic *delta* 0.001)
 
-(defn good-enough?
+(defn good-enough-1?
   [guess x]
   (< (abs (- (square guess) x)) *delta*))
 
@@ -39,16 +39,18 @@
   [guess x]
   (average guess (/ x guess)))
 
-(defn sqrt-iter
+(defn sqrt-iter-1
   [guess x]
-  (if (good-enough? guess x)
+  (if (good-enough-1? guess x)
     guess
-    (sqrt-iter (improve guess x)
+    (sqrt-iter-1 (improve guess x)
                x)))
 
-(defn sqrt
+(def sqrt-iter sqrt-iter-1)
+
+(defn sqrt-1
   [x]
-  (sqrt-iter 1.0 x))
+  (sqrt-iter-1 1.0 x))
 
 ;; Exercise 1.2 Convert to prefix form
 (def ex-1_2 (/
@@ -81,13 +83,44 @@
 
 (defn sqrt-iter-new-if
   [guess x]
-  (new-if (good-enough? guess   x)
+  (new-if (good-enough-1? guess   x)
           guess
           (sqrt-iter-new-if (improve guess x)
                             x)))
 
 ;; Q: What happens if we run this?  A: Stack blows up because else clause always evaluated.
 
+
+;; Exercise 1.7. The good-enough? test used in computing square roots
+;; will not be very effective finding the square roots of very small
+;; numbers. Also, in real computers, arithmetic operations are always
+;; performed with limited precision. This makes our test inadequate
+;; for very large numbers. these statements, with examples showing how
+;; the test fails for small and large numbers. An strategy for
+;; implementing good-enough? is to watch how guess changes from one
+;; iteration to next and to stop when the change is a very small
+;; fraction of the guess. Design a square-root procedure uses this
+;; kind of end test. Does this work better for small and large
+;; numbers?
+
+(defn good-enough-2?
+  [guess x prior]
+  (< (/ (abs (- guess prior)) guess) *delta*))
+
+(defn sqrt-iter-2
+  ([guess x]
+   (sqrt-iter-2 guess x -1.0))
+
+  ([guess x prior]
+   (if (good-enough-2? guess x prior)
+     guess
+     (sqrt-iter-2 (improve guess x)
+                  x
+                  guess))))
+
+(defn sqrt-2
+  [x]
+  (sqrt-iter-2 1.0 x -1.0))
 ;; ------------------------------------------------------------------------------
 ;; BSD 3-Clause License
 
