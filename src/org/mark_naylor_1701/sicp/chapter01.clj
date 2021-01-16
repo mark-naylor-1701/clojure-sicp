@@ -18,28 +18,28 @@
 
 
 ;; Although defined in Math/abs, use this version to follow the text.
-(defn abs
+(defn- abs
   ""
   [x]
   (cond (< x 0) (- x)
         :else x))
 
 ;; Example 1.1.7: Square Roots by Newton's Method
-(def ^:dynamic *delta* 0.001)
+(def ^:private ^:dynamic *delta* 0.001)
 
-(defn good-enough-1?
+(defn- good-enough-1?
   [guess x]
   (< (abs (- (square guess) x)) *delta*))
 
-(defn average
+(defn- average
   [x y]
   (/ (+ x y) 2.0))
 
-(defn improve
+(defn- improve
   [guess x]
   (average guess (/ x guess)))
 
-(defn sqrt-iter-1
+(defn- sqrt-iter-1
   [guess x]
   (if (good-enough-1? guess x)
     guess
@@ -101,11 +101,11 @@
 ;; kind of end test. Does this work better for small and large
 ;; numbers?
 
-(defn good-enough-2?
+(defn- good-enough-2?
   [guess x prior]
   (< (/ (abs (- guess prior)) guess) *delta*))
 
-(defn sqrt-iter-2
+(defn- sqrt-iter-2
   ([guess x]
    (sqrt-iter-2 guess x -1.0))
 
