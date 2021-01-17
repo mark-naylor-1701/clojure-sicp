@@ -43,7 +43,7 @@
   [guess x]
   (if (good-enough-1? guess x)
     guess
-    (sqrt-iter-1 (improve guess x)
+    (recur (improve guess x)
                x)))
 
 (defn sqrt-1
@@ -79,12 +79,15 @@
 ;; Eva demonstrates the program for Alyssa:
 (new-if (= 2 3) 0 5)
 
+
+;; Because `new-if' is not a special form, the recursive call has to
+;; made explicitly. Using recur fails in this case because the Clojure
+;; compiler does not recognize as a proper tail-call.>
 (defn sqrt-iter-new-if
   [guess x]
   (new-if (good-enough-1? guess   x)
           guess
-          (sqrt-iter-new-if (improve guess x)
-                            x)))
+          (sqrt-iter-new-if (improve guess x) x)))
 
 ;; Q: What happens if we run this?  A: Stack blows up because else clause always evaluated.
 
@@ -112,7 +115,7 @@
   ([guess x prior]
    (if (good-enough-2? guess x prior)
      guess
-     (sqrt-iter-2 (improve guess x)
+     (recur (improve guess x)
                   x
                   guess))))
 
