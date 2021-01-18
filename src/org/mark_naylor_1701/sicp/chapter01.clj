@@ -217,12 +217,12 @@
   "Iterative (tail recursive) version."
   [x]
 
-  (defn inner
-    [a b count]
-    (cond
-      (zero? count) b
-      :else (recur (+ a b) a (dec count))))
-  (inner 1 0 x))
+  (letfn [(fib-iter
+             [a b count]
+             (cond
+               (zero? count) b
+               :else (recur (+ a b) a (dec count))))]
+    (fib-iter 1 0 x)))
 
 
 ;; ------------------------------------------------------------------------------
