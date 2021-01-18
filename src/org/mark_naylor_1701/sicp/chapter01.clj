@@ -203,6 +203,26 @@
 (def h "Partially applied A on 2" (partial A 2))
 (defn k [n] "Computes 5 * n^2" (* 5 n n))
 
+;;  Define Fibonacci variants
+
+(defn fib
+  "Recursive version."
+  [x]
+  (cond
+    (zero? x) 0
+    (= x 1) 1
+    :else (+ (fib (dec x)) (fib (- x 2)))))
+
+(defn fib-iter
+  "Iterative (tail recursive) version."
+  [x]
+
+  (defn inner
+    [a b count]
+    (cond
+      (zero? count) b
+      :else (recur (+ a b) a (dec count))))
+  (inner 1 0 x))
 
 
 ;; ------------------------------------------------------------------------------
