@@ -225,6 +225,41 @@
     (fib-iter 1 0 x)))
 
 
+;; Exercise 1.11. A function f is defined by the rule that f(n) = n if
+;; n<3 and f(n) = f(n - 1) + 2f(n - 2) + 3f(n - 3) if n> 3. Write a
+;; procedure that computes f by means of a recursive process. Write a
+;; procedure that computes f by means of an iterative process.
+
+(defn ex1-11-recur
+  [x]
+  (cond
+    (< x 3) x
+    :else (+ (ex1-11-recur (- x 1))
+             (* 2 (ex1-11-recur (- x 2)))
+             (* 3 (ex1-11-recur (- x 3))))))
+
+;; Solution found here: http://community.schemewiki.org/?sicp-ex-1.11
+;; (define (f n)
+;;   (define (f-i a b c count)
+;;     (cond ((< n 3) n)
+;;           ((<= count 0) a)
+;;           (else (f-i (+ a (* 2 b) (* 3 c)) a b (- count 1)))))
+;;   (f-i 2 1 0 (- n 2)))
+
+(defn ex1-11-iter
+  [x]
+  (letfn
+      [(ex1-11-iter [a b c count]
+         (cond
+           (< x 3) x
+           (<= count 0) a
+           :else (recur
+                  (+ a (* 2 b) (* 3 c))
+                  a
+                  b
+                  (dec count))))]
+    (ex1-11-iter 2 1 0 (- x 2))))
+
 ;; ------------------------------------------------------------------------------
 ;; BSD 3-Clause License
 
